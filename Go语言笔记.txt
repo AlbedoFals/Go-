@@ -1,0 +1,13 @@
+
+git remote add origin https://github.com/AlbedoFals/go.git
+
+git push -u origin master
+
+Comments(注释)：
+有两种注释风格：
+1.行注释（以//开始，在一行的结尾结束）
+2.一般注释（以/*开始，以*/结束）
+
+rune、字符串字面量或者注释里面是不能有注释的。
+
+tokens:GO语言的单词。包括：
