@@ -10,4 +10,61 @@ Comments(注释)：
 
 rune、字符串字面量或者注释里面是不能有注释的。
 
-tokens:GO语言的单词。包括：
+tokens:GO语言的单词。包括四类：identifiers，keywords, operators and punctuation, literals。
+
+使用分号作为终止符。
+
+identifiers:用于命名程序实体，例如变量和类型，由一个或多个字母和数字组成。identifiers中的第一个字符必须
+是字母。
+
+keywords:如下所示
+break    default    func    interface    select
+case     defer      go      map          struct
+chan     else       goto    package      switch
+const    fallthrough   if   range        type
+continue  for       import  return       var
+
+operators and punctuation:
++    &    +=    &=    &&    ==    !=    (    )
+-    |    -=    |=    ||    <     <=    [    ]
+*    ^    *=    ^=    <-    >     >=    {    }
+/    <<   /=    <<=   ++    =     :=    ,    ;
+%    >>   %=    >>=   --    !     ...   .    :
+&^   &^=
+
+整数字面量：代表整数常量的一组数字。八进制：以0为前缀，十六进制：以0x或0X为前缀，a-f和A-F表示10-15。
+42, 0600, 0xBadFace
+浮点字面量：0., 72.40, 072.40, 2.71828, 1.e+0, 6.674283-11, 1E6, .25, .12345E+5
+虚数字面量：浮点字面量或者十进制整数 +　小写字母i。
+0i, 011i, 0.i, 2.71828i, 1.e+0i, 6.67428e-11i, 1E6i, .25i, .12345E+5i
+
+Rune字面量：一个标识Unicode代码点的整数值。一个rune字面量表现为：'一个或多个字符'， 例如：'x', '\n'
+单引号中可以是任何字符，除了换行符和未转义的单引号。
+
+rune_lit         = "'" ( unicode_value | byte_value ) "'" .
+unicode_value    = unicode_char | little_u_value | big_u_value | escaped_char .
+byte_value       = octal_byte_value | hex_byte_value .
+octal_byte_value = `\` octal_digit octal_digit octal_digit .
+hex_byte_value   = `\` "x" hex_digit hex_digit .
+little_u_value   = `\` "u" hex_digit hex_digit hex_digit hex_digit .
+big_u_value      = `\` "U" hex_digit hex_digit hex_digit hex_digit
+                           hex_digit hex_digit hex_digit hex_digit .
+escaped_char     = `\` ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | `\` | "'" | `"` ) .
+
+'a'
+'ä'
+'本'
+'\t'
+'\000'
+'\007'
+'\377'
+'\x07'
+'\xff'
+'\u12e4'
+'\U00101234'
+'\''         // rune literal containing single quote character
+'aa'         // illegal: too many characters
+'\xa'        // illegal: too few hexadecimal digits
+'\0'         // illegal: too few octal digits
+'\uDFFF'     // illegal: surrogate half
+'\U00110000' // illegal: invalid Unicode code point
